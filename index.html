@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="vi" data-theme="auto">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nebula Studio — Landing Page tĩnh (HTML/CSS/JS thuần)</title>
+  <meta name="description" content="Trang web tĩnh mẫu ngẫu nhiên: Nebula Studio. Bao gồm hero, tính năng, dự án, testimonial, giá, FAQ, liên hệ, dark mode, màu điểm nhấn ngẫu nhiên." />
+  <meta property="og:title" content="Nebula Studio — Landing Page tĩnh" />
+  <meta property="og:description" content="HTML một file, đáp ứng, có dark mode, random accent, mobile menu, accordion, modal và form mẫu." />
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop stop-color='%23ffcc70'/%3E%3Cstop offset='1' stop-color='%238570ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-size='28' font-family='Segoe UI,Arial' fill='white'%3E★%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root{
+      --bg: hsl(0 0% 100%);
+      --text: hsl(222 47% 11%);
+      --muted: hsl(220 14% 96%);
+      --muted-2: hsl(220 9% 90%);
+      --border: hsl(220 13% 91%);
+      --acc-h: 270; /* sẽ đổi bằng JS */
+      --acc: hsl(var(--acc-h) 90% 55%);
+      --acc-600: hsl(var(--acc-h) 85% 48%);
+      --acc-700: hsl(var(--acc-h) 80% 42%);
+      --shadow: 0 10px 30px hsl(0 0% 0% / .08);
+    }
+    [data-theme="dark"]{
+      --bg: hsl(222 47% 8%);
+      --text: hsl(0 0% 100%);
+      --muted: hsl(223 12% 16%);
+      --muted-2: hsl(223 12% 20%);
+      --border: hsl(223 12% 24%);
+      --shadow: 0 10px 30px hsl(0 0% 0% / .35);
+    }
+
+    html, body {height: 100%;}
+    body{
+      margin:0; font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: var(--bg); color: var(--text);
+    }
+    .container{width:min(1100px, 92%); margin-inline:auto}
+    .row{display:grid; gap:1.25rem}
+
+    /* Header */
+    header{position:sticky; top:0; z-index:20; backdrop-filter:saturate(1.2) blur(8px); background: color-mix(in oklab, var(--bg) 85%, transparent); border-bottom:1px solid var(--border)}
+    .nav{display:flex; align-items:center; justify-content:space-between; padding: .75rem 0}
+    .brand{display:flex; align-items:center; gap:.6rem; font-weight:700; letter-spacing:.2px}
+    .logo{inline-size:34px; block-size:34px; border-radius:10px; background: linear-gradient(135deg, color-mix(in oklab, var(--acc), white 15%), color-mix(in oklab, var(--acc-700), black 5%)); display:grid; place-items:center; color:white; font-weight:800}
+    nav ul{display:flex; gap:1rem; list-style:none; margin:0; padding:0}
+    nav a{display:inline-block; padding:.5rem .8rem; border-radius:12px; color:inherit; text-decoration:none}
+    nav a:hover{background:var(--muted)}
+    .actions{display:flex; gap:.5rem; align-items:center}
+    .btn, button, .chip{cursor:pointer; border:none}
+    .btn{background:var(--acc); color:white; padding:.6rem 1rem; border-radius:12px; font-weight:600; box-shadow: var(--shadow)}
+    .btn:hover{background:var(--acc-600)}
+    .btn.ghost{color:var(--text); background:var(--muted); box-shadow:none}
+    .btn.icon{display:grid; place-items:center; width:40px; height:40px; padding:0; border-radius:12px; background:var(--muted)}
+
+    /* Mobile menu */
+    .burger{display:none}
+    @media (max-width: 860px){
+      .burger{display:grid}
+      nav{position:fixed; inset:56px 0 auto 0; background:var(--bg); border-bottom:1px solid var(--border); transform:translateY(-120%); transition:transform .25s ease;}
+      nav.open{transform:translateY(0)}
+      nav ul{flex-direction:column; padding: .6rem .9rem}
+      .actions{display:none}
+    }
+
+    /* Hero */
+    .hero{display:grid; place-items:center; min-block-size: clamp(70svh, 82svh, 95svh); position:relative; overflow:hidden}
+    .hero .container{display:grid; gap:2.2rem; align-items:center; grid-template-columns: 1.15fr .85fr}
+    .hero h1{font-size: clamp(2rem, 2.8rem + 1vw, 3.6rem); line-height:1.15; letter-spacing:-.02em; margin:0}
+    .lead{font-size: clamp(1rem, .98rem + .4vw, 1.25rem); color: color-mix(in oklab, var(--text), #888 45%)}
+    .cta{display:flex; gap:.7rem; flex-wrap:wrap}
+    .hero-visual{aspect-ratio: 1/1; border-radius: 28px; background:
+      radial-gradient(80% 80% at 30% 20%, color-mix(in oklab, var(--acc), white 20%), transparent),
+      radial-gradient(60% 60% at 75% 40%, color-mix(in oklab, var(--acc-700), black 5%), transparent),
+      linear-gradient(135deg, var(--muted), var(--muted-2));
+      box-shadow: var(--shadow);
+      display:grid; place-items:center; position:relative; isolation:isolate;
+    }
+    .spark{position:absolute; width:160px; height:160px; border-radius:50%; filter: blur(32px); opacity:.7; z-index:-1}
+    .spark.one{top:-20px; left:-20px; background: color-mix(in oklab, var(--acc), white 35%)}
+    .spark.two{bottom:-20px; right:-20px; background: color-mix(in oklab, var(--acc-700), black 5%)}
+    .chip{background: color-mix(in oklab, var(--acc), white 85%); color: color-mix(in oklab, var(--acc-700), black 30%); padding:.35rem .6rem; border-radius:999px; font-weight:700; font-size:.85rem}
+
+    @media (max-width: 980px){
+      .hero .container{grid-template-columns: 1fr}
+      .hero-visual{order:-1}
+    }
+
+    /* Sections */
+    section{padding: clamp(2.5rem, 4vw + 1rem, 5rem) 0; border-top:1px solid var(--border)}
+    h2{font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.2rem); margin:.2rem 0 1rem}
+    .grid-3{display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem}
+    .card{background:linear-gradient(180deg, var(--muted), color-mix(in oklab, var(--muted), transparent 35%)); border:1px solid var(--border); border-radius:18px; padding:1.1rem; box-shadow: var(--shadow)}
+    .card h3{margin:.2rem 0 .4rem}
+    .icon{inline-size:42px; block-size:42px; border-radius:12px; display:grid; place-items:center; background: color-mix(in oklab, var(--acc), white 75%); color: var(--acc-700); font-weight:800}
+    @media (max-width: 900px){ .grid-3{grid-template-columns:1fr 1fr} }
+    @media (max-width: 640px){ .grid-3{grid-template-columns:1fr} }
+
+    /* Projects */
+    .projects{display:grid; grid-template-columns: repeat(12, 1fr); gap:1rem}
+    .tile{grid-column: span 4; aspect-ratio: 4/3; border-radius:18px; overflow:hidden; position:relative; background:linear-gradient(135deg, var(--muted), var(--muted-2)); border:1px solid var(--border); box-shadow: var(--shadow)}
+    .tile.large{grid-column: span 8}
+    .tile .badge{position:absolute; top:.7rem; left:.7rem}
+    .tile button{position:absolute; inset:auto .7rem .7rem auto}
+    .tile svg{position:absolute; inset:0; width:100%; height:100%; opacity:.5}
+    @media (max-width: 980px){ .tile, .tile.large{grid-column:span 6} }
+    @media (max-width: 640px){ .tile, .tile.large{grid-column:span 12} }
+
+    /* Pricing */
+    .pricing{display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem}
+    .plan{padding:1.2rem; border:1px solid var(--border); border-radius:18px; background:linear-gradient(180deg, var(--muted), color-mix(in oklab, var(--muted), transparent 35%)); box-shadow: var(--shadow)}
+    .plan.pop{outline: 2px solid color-mix(in oklab, var(--acc), white 35%)}
+    .price{font-size:2rem; font-weight:800}
+    .plan ul{padding-left:1.1rem}
+    @media (max-width: 900px){ .pricing{grid-template-columns:1fr} }
+
+    /* FAQ */
+    .faq details{border:1px solid var(--border); border-radius:14px; padding:.9rem 1rem; background:var(--muted)}
+    .faq details + details{margin-top:.7rem}
+    .faq summary{cursor:pointer; font-weight:700}
+
+    /* Contact */
+    form{display:grid; gap:.8rem}
+    input, textarea{width:100%; padding:.75rem .85rem; border-radius:12px; border:1px solid var(--border); background:var(--bg); color:inherit}
+    input:focus, textarea:focus{outline:2px solid color-mix(in oklab, var(--acc), white 35%)}
+
+    /* Footer */
+    footer{padding:2rem 0; border-top:1px solid var(--border); color: color-mix(in oklab, var(--text), #888 40%)}
+
+    /* Utilities */
+    .split{display:flex; gap:.8rem; flex-wrap:wrap}
+    .center{text-align:center}
+    .muted{color: color-mix(in oklab, var(--text), #888 45%)}
+    .hidden{display:none}
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+    .shadow{box-shadow: var(--shadow)}
+
+    /* Back to top */
+    #backTop{position:fixed; right:1rem; bottom:1rem; opacity:0; transform: translateY(8px); transition:.2s; z-index:50}
+    #backTop.show{opacity:1; transform:none}
+
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{animation: f .6s ease both}
+      @keyframes f{from{opacity:0; transform: translateY(8px)} to{opacity:1; transform:none}}
+    }
+  </style>
+</head>
+<body>
+  <a class="sr-only" href="#main">Bỏ qua điều hướng</a>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo">NS</div>
+        <span>Nebula Studio</span>
+      </div>
+      <nav id="nav">
+        <ul>
+          <li><a href="#tinh-nang">Tính năng</a></li>
+          <li><a href="#du-an">Dự án</a></li>
+          <li><a href="#bang-gia">Bảng giá</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#lien-he">Liên hệ</a></li>
+        </ul>
+      </nav>
+      <div class="actions">
+        <button class="btn ghost" id="accentBtn" title="Random màu điểm nhấn">🎨</button>
+        <button class="btn ghost" id="themeBtn" title="Chuyển sáng/tối">🌓</button>
+        <a class="btn" href="#lien-he">Nhận tư vấn</a>
+      </div>
+      <button class="btn icon burger" id="burger" aria-label="Mở menu">
+        ☰
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container">
+        <div class="fade-in">
+          <span class="chip">Sáng tạo • Nhanh • Gọn</span>
+          <h1>Thiết kế & triển khai website hiện đại cho <span style="color:var(--acc)">startup Việt</span>.</h1>
+          <p class="lead">Nebula Studio mang đến giao diện đẹp, tốc độ nhanh, bảo mật tốt. HTML/CSS/JS thuần, không phụ thuộc nặng nề — dễ bảo trì và mở rộng.</p>
+          <div class="cta split">
+            <a class="btn" href="#bang-gia">Xem gói dịch vụ</a>
+            <a class="btn ghost" href="#du-an">Xem dự án</a>
+          </div>
+        </div>
+        <div class="hero-visual fade-in" aria-hidden="true">
+          <div class="spark one"></div>
+          <div class="spark two"></div>
+          <svg viewBox="0 0 600 600" role="img" aria-label="Minh hoạ trừu tượng">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="var(--acc)"/>
+                <stop offset="1" stop-color="var(--acc-700)"/>
+              </linearGradient>
+            </defs>
+            <g opacity=".9">
+              <circle cx="180" cy="260" r="110" fill="url(#g1)"/>
+              <rect x="280" y="130" width="200" height="140" rx="22" fill="url(#g1)" opacity=".5"/>
+              <rect x="250" y="330" width="240" height="160" rx="28" fill="url(#g1)" opacity=".7"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section id="tinh-nang">
+      <div class="container">
+        <h2>Tính năng nổi bật</h2>
+        <div class="grid-3">
+          <article class="card">
+            <div class="icon">⚡</div>
+            <h3>Tốc độ & SEO</h3>
+            <p>HTML/CSS tối giản, tải nhanh, điểm Lighthouse cao. Cấu trúc semantic thân thiện cho máy tìm kiếm.</p>
+          </article>
+          <article class="card">
+            <div class="icon">🧩</div>
+            <h3>Module hoá</h3>
+            <p>Thành phần UI tái sử dụng, dễ thêm mục: blog, gallery, testimonial, bảng giá…</p>
+          </article>
+          <article class="card">
+            <div class="icon">🛡️</div>
+            <h3>Bảo trì dễ dàng</h3>
+            <p>Không framework nặng — giảm rủi ro phụ thuộc, ít nâng cấp phá vỡ.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="du-an">
+      <div class="container">
+        <div class="split" style="align-items:end; justify-content:space-between">
+          <h2>Dự án tiêu biểu</h2>
+          <p class="muted">Click “Xem” để mở xem nhanh.</p>
+        </div>
+        <div class="projects">
+          <figure class="tile large shadow">
+            <span class="badge chip">Landing SaaS</span>
+            <button class="btn ghost open-modal" data-title="SaaS Analytics" data-desc="Landing page đơn giản cho sản phẩm phân tích" aria-haspopup="dialog">Xem</button>
+            <svg viewBox="0 0 600 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="600" height="450" fill="var(--muted)"/>
+              <g fill="var(--acc)" opacity=".6">
+                <rect x="40" y="40" rx="12" width="520" height="40"/>
+                <rect x="40" y="100" rx="12" width="420" height="280"/>
+                <rect x="470" y="100" rx="12" width="90" height="90"/>
+              </g>
+            </svg>
+          </figure>
+          <figure class="tile shadow">
+            <span class="badge chip">Portfolio</span>
+            <button class="btn ghost open-modal" data-title="Portfolio cá nhân" data-desc="Giới thiệu kỹ năng & dự án">Xem</button>
+            <svg viewBox="0 0 600 450" aria-hidden="true">
+              <rect width="600" height="450" fill="var(--muted)"/>
+              <g fill="var(--acc)" opacity=".6">
+                <circle cx="150" cy="160" r="80"/>
+                <rect x="270" y="100" rx="12" width="290" height="60"/>
+                <rect x="270" y="180" rx="12" width="290" height="210"/>
+              </g>
+            </svg>
+          </figure>
+          <figure class="tile shadow">
+            <span class="badge chip">Cửa hàng</span>
+            <button class="btn ghost open-modal" data-title="Shop tĩnh" data-desc="Catalog sản phẩm đơn giản">Xem</button>
+            <svg viewBox="0 0 600 450" aria-hidden="true">
+              <rect width="600" height="450" fill="var(--muted)"/>
+              <g fill="var(--acc)" opacity=".6">
+                <rect x="50" y="60" width="500" height="60" rx="12"/>
+                <rect x="50" y="140" width="150" height="260" rx="12"/>
+                <rect x="220" y="140" width="150" height="260" rx="12"/>
+                <rect x="390" y="140" width="160" height="260" rx="12"/>
+              </g>
+            </svg>
+          </figure>
+          <figure class="tile shadow">
+            <span class="badge chip">Sự kiện</span>
+            <button class="btn ghost open-modal" data-title="Hội thảo" data-desc="Trang sự kiện đăng ký nhanh">Xem</button>
+            <svg viewBox="0 0 600 450" aria-hidden="true">
+              <rect width="600" height="450" fill="var(--muted)"/>
+              <g fill="var(--acc)" opacity=".6">
+                <rect x="60" y="70" width="480" height="70" rx="12"/>
+                <rect x="60" y="160" width="480" height="220" rx="12"/>
+              </g>
+            </svg>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="center">
+      <div class="container">
+        <h2>Khách hàng nói gì</h2>
+        <div class="grid-3">
+          <blockquote class="card">“Site chạy mượt và rất dễ SEO.”<br><strong>— Minh, Growth Lead</strong></blockquote>
+          <blockquote class="card">“Thiết kế sạch, rõ ràng, dễ mở rộng.”<br><strong>— Lan, PM</strong></blockquote>
+          <blockquote class="card">“Không còn đau đầu vì framework nặng.”<br><strong>— Dũng, DevOps</strong></blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section id="bang-gia">
+      <div class="container">
+        <h2>Bảng giá</h2>
+        <div class="pricing">
+          <div class="plan">
+            <h3>Starter</h3>
+            <p class="price">0₫</p>
+            <ul>
+              <li>1 trang tĩnh</li>
+              <li>Triển khai GitHub Pages</li>
+              <li>Hỗ trợ cơ bản</li>
+            </ul>
+            <p><a class="btn ghost" href="#lien-he">Bắt đầu</a></p>
+          </div>
+          <div class="plan pop">
+            <h3>Pro</h3>
+            <p class="price">1.990.000₫</p>
+            <ul>
+              <li>5–7 trang</li>
+              <li>Tối ưu hiệu năng/SEO</li>
+              <li>Tích hợp form liên hệ</li>
+            </ul>
+            <p><a class="btn" href="#lien-he">Chọn gói Pro</a></p>
+          </div>
+          <div class="plan">
+            <h3>Business</h3>
+            <p class="price">Liên hệ</p>
+            <ul>
+              <li>Tùy biến theo yêu cầu</li>
+              <li>Hỗ trợ ưu tiên</li>
+              <li>Tư vấn kiến trúc</li>
+            </ul>
+            <p><a class="btn ghost" href="#lien-he">Trao đổi</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="faq">
+      <div class="container">
+        <h2>Câu hỏi thường gặp</h2>
+        <details>
+          <summary>Site tĩnh có mở rộng tính năng được không?</summary>
+          <p>Có. Bạn có thể thêm blog, gallery, form, hoặc đặt reverse proxy để chạy backend sau này.</p>
+        </details>
+        <details>
+          <summary>Dark mode hoạt động thế nào?</summary>
+          <p>Chúng tôi dùng <code>data-theme</code> trên <code>html</code> và lưu lựa chọn trong <code>localStorage</code>.</p>
+        </details>
+        <details>
+          <summary>Accent color “ngẫu nhiên” là gì?</summary>
+          <p>Mỗi lần tải trang, JS chọn một màu HSL ngẫu nhiên và gán vào CSS variable <code>--acc-h</code>.</p>
+        </details>
+      </div>
+    </section>
+
+    <section id="lien-he">
+      <div class="container">
+        <h2>Liên hệ</h2>
+        <form id="contactForm" novalidate>
+          <div class="row" style="grid-template-columns:1fr 1fr">
+            <label>
+              <span class="sr-only">Họ tên</span>
+              <input required id="name" name="name" placeholder="Họ tên *" />
+            </label>
+            <label>
+              <span class="sr-only">Email</span>
+              <input required id="email" name="email" type="email" placeholder="Email *" />
+            </label>
+          </div>
+          <label>
+            <span class="sr-only">Nội dung</span>
+            <textarea required id="msg" name="message" rows="4" placeholder="Bạn cần gì? *"></textarea>
+          </label>
+          <div class="split">
+            <button class="btn" type="submit">Gửi yêu cầu</button>
+            <span id="formNote" class="muted" aria-live="polite"></span>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container split" style="justify-content:space-between; align-items:center">
+      <p>© <span id="y"></span> Nebula Studio. Mã nguồn 1 file HTML, không phụ thuộc ngoài.</p>
+      <div class="split">
+        <a class="btn ghost" href="#top" id="resetBtn" title="Đặt lại mặc định">↺ Reset</a>
+      </div>
+    </div>
+  </footer>
+
+  <button id="backTop" class="btn ghost" aria-label="Về đầu trang">↑</button>
+
+  <!-- Modal preview dự án -->
+  <dialog id="preview" style="border:none; border-radius:18px; padding:0; max-width:min(800px, 92vw); box-shadow:var(--shadow)">
+    <div style="padding:1rem; background:var(--bg); border:1px solid var(--border); border-radius:18px">
+      <div class="split" style="justify-content:space-between; align-items:center; margin-bottom:.6rem">
+        <strong id="pvTitle">Xem nhanh</strong>
+        <button class="btn ghost" id="pvClose" aria-label="Đóng">✕</button>
+      </div>
+      <p id="pvDesc" class="muted" style="margin-top:0">Mô tả ngắn…</p>
+      <div class="tile shadow" style="aspect-ratio: 4/3; margin-top:.5rem">
+        <svg viewBox="0 0 600 450" aria-hidden="true">
+          <rect width="600" height="450" fill="var(--muted)"/>
+          <g fill="var(--acc)" opacity=".6">
+            <rect x="40" y="40" rx="12" width="520" height="40"/>
+            <rect x="40" y="100" rx="12" width="520" height="300"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    (function(){
+      const $ = s => document.querySelector(s);
+      const $$ = s => document.querySelectorAll(s);
+
+      // 1) Random accent hue (persist per session)
+      const savedHue = sessionStorage.getItem('acc-h');
+      const rndHue = savedHue ? Number(savedHue) : Math.floor(Math.random() * 360);
+      document.documentElement.style.setProperty('--acc-h', rndHue);
+      sessionStorage.setItem('acc-h', String(rndHue));
+
+      $('#accentBtn')?.addEventListener('click', () => {
+        const h = Math.floor(Math.random()*360);
+        document.documentElement.style.setProperty('--acc-h', h);
+        sessionStorage.setItem('acc-h', String(h));
+      });
+
+      // 2) Theme (auto / light / dark) with storage
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+      const storeKey = 'theme-mode';
+      const applyTheme = (mode) => {
+        if(mode === 'auto'){
+          document.documentElement.setAttribute('data-theme', prefersDark.matches ? 'dark' : 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', mode);
+        }
+      };
+      let mode = localStorage.getItem(storeKey) || 'auto';
+      applyTheme(mode);
+      prefersDark.addEventListener('change', () => mode==='auto' && applyTheme('auto'));
+      $('#themeBtn')?.addEventListener('click', () => {
+        mode = mode === 'auto' ? 'dark' : (mode === 'dark' ? 'light' : 'auto');
+        localStorage.setItem(storeKey, mode);
+        applyTheme(mode);
+        $('#themeBtn').title = 'Chế độ: ' + mode;
+      });
+
+      // 3) Mobile menu
+      const nav = $('#nav');
+      $('#burger')?.addEventListener('click', () => nav.classList.toggle('open'));
+      nav?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+      // 4) Back to top
+      const back = $('#backTop');
+      const toggleBack = () => {
+        if (window.scrollY > 300) back.classList.add('show'); else back.classList.remove('show');
+      };
+      window.addEventListener('scroll', toggleBack);
+      back?.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+      // 5) Modal preview
+      const dialog = $('#preview');
+      $$('.open-modal').forEach(btn => btn.addEventListener('click', () => {
+        $('#pvTitle').textContent = btn.dataset.title || 'Xem nhanh';
+        $('#pvDesc').textContent = btn.dataset.desc || '';
+        dialog.showModal();
+      }));
+      $('#pvClose')?.addEventListener('click', () => dialog.close());
+      dialog?.addEventListener('click', (e) => { if(e.target === dialog) dialog.close(); });
+
+      // 6) Form validation (demo)
+      $('#y').textContent = new Date().getFullYear();
+      const form = $('#contactForm');
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = $('#name').value.trim();
+        const email = $('#email').value.trim();
+        const msg = $('#msg').value.trim();
+        const note = $('#formNote');
+        if(!name || !email || !msg){ note.textContent = 'Vui lòng điền đủ các trường bắt buộc.'; return; }
+        if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ note.textContent = 'Email chưa hợp lệ.'; return; }
+        note.textContent = 'Đã nhận yêu cầu (demo, không gửi mạng). Cảm ơn bạn!';
+        form.reset();
+      });
+
+      // 7) Reset all
+      $('#resetBtn')?.addEventListener('click', () => {
+        localStorage.removeItem(storeKey);
+        sessionStorage.removeItem('acc-h');
+        location.reload();
+      });
+    })();
+  </script>
+</body>
+</html>
